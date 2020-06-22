@@ -1,0 +1,833 @@
+make clean
+  CLEAN   arch/x86/kernel/cpu
+  CLEAN   arch/x86/entry/vdso
+  CLEAN   arch/x86/kernel
+  CLEAN   certs
+  CLEAN   kernel/debug/kdb
+  CLEAN   usr
+  CLEAN   arch/x86/tools
+sh ./scripts/package/mkdebian
+  TAR     linux-5.4.19-rt27.tar.gz
+origversion=$(dpkg-parsechangelog -SVersion |sed 's/-[^-]*$//');\
+	mv linux-5.4.19-rt27.tar.gz ../linux-5.4.19-rt27_${origversion}.orig.tar.gz
+dpkg-buildpackage -r"fakeroot -u" -a$(cat debian/arch)  -i.git -us -uc
+[1mdpkg-buildpackage: [0m[32minfo[0m: source package linux-5.4.19-rt27
+[1mdpkg-buildpackage: [0m[32minfo[0m: source version 5.4.19-rt27-1
+[1mdpkg-buildpackage: [0m[32minfo[0m: source distribution bionic
+[1mdpkg-buildpackage: [0m[32minfo[0m: source changed by prajjwal <prajjwal@uchenna-HP-EliteOne-800-G1-Touch-AiO>
+[1mdpkg-buildpackage: [0m[32minfo[0m: host architecture amd64
+rm -rf debian/*tmp debian/files
+make clean
+[1mdpkg-source: [0m[32minfo[0m: using source format '1.0'
+[1mdpkg-source: [0m[32minfo[0m: building linux-5.4.19-rt27 using existing linux-5.4.19-rt27_5.4.19-rt27.orig.tar.gz
+[1mdpkg-source: [0m[32minfo[0m: building linux-5.4.19-rt27 in linux-5.4.19-rt27_5.4.19-rt27-1.diff.gz
+[1mdpkg-source: [0m[32minfo[0m: use the '3.0 (quilt)' format to have separate and documented changes to upstream files, see dpkg-source(1)
+[1mdpkg-source: [0m[32minfo[0m: building linux-5.4.19-rt27 in linux-5.4.19-rt27_5.4.19-rt27-1.dsc
+make KERNELRELEASE=5.4.19-rt27 ARCH=x86 	KBUILD_BUILD_VERSION=1 -f ./Makefile
+  HOSTCC  scripts/basic/fixdep
+  DESCEND  objtool
+  HOSTCC   /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/fixdep.o
+  HOSTLD   /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/fixdep-in.o
+  LINK     /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/fixdep
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/arch/x86/decode.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/builtin-check.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/builtin-orc.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/check.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/exec-cmd.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/help.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/orc_gen.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/orc_dump.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/elf.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/pager.o
+  LD       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/arch/x86/objtool-in.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/parse-options.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/run-command.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/sigchain.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/special.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/subcmd-config.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/objtool.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/libstring.o
+  LD       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/libsubcmd-in.o
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/libctype.o
+  AR       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/libsubcmd.a
+  CC       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/str_error_r.o
+  LD       /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/objtool-in.o
+  LINK     /home/prajjwal/Downloads/linux-5.4.19/tools/objtool/objtool
+  HOSTCC  arch/x86/tools/relocs_32.o
+  HOSTCC  arch/x86/tools/relocs_64.o
+  HOSTCC  arch/x86/tools/relocs_common.o
+  HOSTCC  scripts/bin2c
+  HOSTCC  scripts/selinux/genheaders/genheaders
+  HOSTLD  arch/x86/tools/relocs
+  HOSTCC  scripts/kallsyms
+  HOSTCC  scripts/selinux/mdp/mdp
+  HOSTCC  scripts/conmakehash
+  HOSTCC  scripts/recordmcount
+  HOSTCC  scripts/sortextable
+  HOSTCC  scripts/asn1_compiler
+  HOSTCC  scripts/extract-cert
+  HOSTCC  scripts/sign-file
+  HOSTCC  scripts/insert-sys-cert
+  HOSTCC  scripts/mod/mk_elfconfig
+  CC      scripts/mod/devicetable-offsets.s
+  CC      scripts/mod/empty.o
+  MKELF   scripts/mod/elfconfig.h
+  HOSTCC  scripts/mod/modpost.o
+  HOSTCC  scripts/mod/sumversion.o
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTLD  scripts/mod/modpost
+  CC      kernel/bounds.s
+  CALL    scripts/atomic/check-atomics.sh
+  CC      arch/x86/kernel/asm-offsets.s
+  CALL    scripts/checksyscalls.sh
+  CHK     include/generated/compile.h
+  HOSTCC  usr/gen_init_cpio
+  EXTRACT_CERTS   certs/signing_key.pem
+  CC      mm/filemap.o
+  CC      ipc/compat.o
+  CC [M]  fs/9p/vfs_super.o
+  CC      certs/system_keyring.o
+  GEN     usr/initramfs_data.cpio
+  CC      init/main.o
+  CC      arch/x86/crypto/crc32c-intel_glue.o
+  CC      kernel/bpf/core.o
+  AS      usr/initramfs_data.o
+  CC      ipc/util.o
+  EXTRACT_CERTS   
+  AR      usr/built-in.a
+  CC      certs/blacklist_nohashes.o
+  CC      certs/blacklist.o
+  CC [M]  fs/9p/vfs_inode.o
+  AS      arch/x86/crypto/crc32c-pcl-intel-asm_64.o
+  CC      arch/x86/entry/vdso/vma.o
+  CC [M]  arch/x86/crypto/glue_helper.o
+  AS      certs/system_certificates.o
+  AR      certs/built-in.a
+  CC      ipc/msgutil.o
+  CC      arch/x86/entry/vsyscall/vsyscall_64.o
+  CC      init/version.o
+  CC [M]  fs/9p/vfs_inode_dotl.o
+  AS [M]  arch/x86/crypto/des3_ede-asm_64.o
+  CC      ipc/msg.o
+  CC      arch/x86/entry/vdso/vdso32-setup.o
+  CC [M]  arch/x86/crypto/des3_ede_glue.o
+  CC      init/do_mounts.o
+  LDS     arch/x86/entry/vdso/vdso.lds
+  CC      kernel/bpf/syscall.o
+  AS      arch/x86/entry/vsyscall/vsyscall_emu_64.o
+  AS      arch/x86/entry/vdso/vdso-note.o
+  AR      arch/x86/entry/vsyscall/built-in.a
+  CC      arch/x86/entry/vdso/vclock_gettime.o
+  CC [M]  fs/9p/vfs_addr.o
+  CC      security/apparmor/apparmorfs.o
+  CC      mm/mempool.o
+  AS [M]  arch/x86/crypto/camellia-x86_64-asm_64.o
+  CC      ipc/sem.o
+  CC [M]  arch/x86/crypto/camellia_glue.o
+  CC      arch/x86/entry/vdso/vgetcpu.o
+  HOSTCC  arch/x86/entry/vdso/vdso2c
+  CC [M]  fs/9p/vfs_file.o
+  CC      mm/oom_kill.o
+  CC      init/do_mounts_initrd.o
+  LDS     arch/x86/entry/vdso/vdsox32.lds
+  AS [M]  arch/x86/crypto/blowfish-x86_64-asm_64.o
+  X32     arch/x86/entry/vdso/vdso-note-x32.o
+  X32     arch/x86/entry/vdso/vclock_gettime-x32.o
+  X32     arch/x86/entry/vdso/vgetcpu-x32.o
+  LDS     arch/x86/entry/vdso/vdso32/vdso32.lds
+  CC [M]  arch/x86/crypto/blowfish_glue.o
+  CC      arch/x86/entry/vdso/vdso32/vclock_gettime.o
+  CC      init/do_mounts_md.o
+  CC [M]  fs/9p/vfs_dir.o
+  CC      kernel/bpf/verifier.o
+  CC      ipc/shm.o
+  AS      arch/x86/entry/vdso/vdso32/note.o
+  AS [M]  arch/x86/crypto/twofish-x86_64-asm_64.o
+  AS      arch/x86/entry/vdso/vdso32/system_call.o
+  CC      security/apparmor/audit.o
+  CC [M]  arch/x86/crypto/twofish_glue.o
+  AS      arch/x86/entry/vdso/vdso32/sigreturn.o
+  CC      mm/fadvise.o
+  VDSO    arch/x86/entry/vdso/vdso64.so.dbg
+  VDSO    arch/x86/entry/vdso/vdsox32.so.dbg
+  AS [M]  arch/x86/crypto/twofish-x86_64-asm_64-3way.o
+  CC [M]  fs/9p/vfs_dentry.o
+  VDSO    arch/x86/entry/vdso/vdso32.so.dbg
+  OBJCOPY arch/x86/entry/vdso/vdso64.so
+  CC [M]  arch/x86/crypto/twofish_glue_3way.o
+  OBJCOPY arch/x86/entry/vdso/vdsox32.so
+  OBJCOPY arch/x86/entry/vdso/vdso32.so
+  VDSO2C  arch/x86/entry/vdso/vdso-image-64.c
+  CC      init/initramfs.o
+  VDSO2C  arch/x86/entry/vdso/vdso-image-x32.c
+  VDSO2C  arch/x86/entry/vdso/vdso-image-32.c
+  CC      arch/x86/entry/vdso/vdso-image-64.o
+  CC      mm/maccess.o
+  CC      ipc/syscall.o
+  CC      arch/x86/entry/vdso/vdso-image-x32.o
+  GEN     security/apparmor/capability_names.h
+  CC [M]  fs/9p/v9fs.o
+  CC      security/apparmor/task.o
+  AS [M]  arch/x86/crypto/chacha-ssse3-x86_64.o
+  CC      arch/x86/entry/vdso/vdso-image-32.o
+  CC      init/calibrate.o
+  CC      mm/page-writeback.o
+  CC [M]  arch/x86/crypto/chacha_glue.o
+  AR      arch/x86/entry/vdso/built-in.a
+  CC [M]  fs/9p/fid.o
+  AS      arch/x86/entry/entry_64.o
+  CC      ipc/ipc_sysctl.o
+  CC      init/init_task.o
+  AS      arch/x86/entry/thunk_64.o
+  AS [M]  arch/x86/crypto/chacha-avx2-x86_64.o
+  AS [M]  arch/x86/crypto/chacha-avx512vl-x86_64.o
+  CC      arch/x86/entry/syscall_64.o
+  AS [M]  arch/x86/crypto/serpent-sse2-x86_64-asm_64.o
+  CC      ipc/mqueue.o
+  CC [M]  arch/x86/crypto/serpent_sse2_glue.o
+  CC      security/apparmor/ipc.o
+  AR      init/built-in.a
+  AS [M]  arch/x86/crypto/aesni-intel_asm.o
+  CC [M]  fs/9p/xattr.o
+  CC [M]  fs/9p/cache.o
+  CC      mm/readahead.o
+  CC      arch/x86/entry/common.o
+  CC      security/integrity/evm/evm_main.o
+  CC [M]  arch/x86/crypto/aesni-intel_glue.o
+  CC      security/apparmor/lib.o
+  CC      kernel/bpf/inode.o
+  AS      arch/x86/entry/entry_64_compat.o
+  CC      mm/swap.o
+  CC [M]  fs/9p/acl.o
+  CC      arch/x86/entry/syscall_32.o
+  AS [M]  arch/x86/crypto/aesni-intel_avx-x86_64.o
+  CC      security/integrity/evm/evm_crypto.o
+  CC      ipc/namespace.o
+  AR      arch/x86/entry/built-in.a
+  CC      security/integrity/evm/evm_secfs.o
+  CC      kernel/bpf/helpers.o
+  AS [M]  arch/x86/crypto/aes_ctrby8_avx-x86_64.o
+scripts/Makefile.build:265: recipe for target 'mm/swap.o' failed
+Makefile:1652: recipe for target 'mm' failed
+  AS [M]  arch/x86/crypto/ghash-clmulni-intel_asm.o
+  CC      security/apparmor/match.o
+  CC [M]  arch/x86/crypto/ghash-clmulni-intel_glue.o
+  CC [M]  fs/adfs/dir.o
+  CC      ipc/mq_sysctl.o
+  LD [M]  fs/9p/9p.o
+  CC      security/integrity/evm/evm_posix_acl.o
+  CC      security/apparmor/path.o
+  AR      ipc/built-in.a
+  CC      kernel/cgroup/cgroup.o
+  CC      kernel/cgroup/rstat.o
+  CC      security/integrity/ima/ima_fs.o
+  AR      security/integrity/evm/built-in.a
+  CC [M]  fs/adfs/dir_f.o
+  CC      security/integrity/ima/ima_queue.o
+  AS [M]  arch/x86/crypto/sha1_ssse3_asm.o
+  CC      kernel/bpf/tnum.o
+  CC [M]  arch/x86/crypto/sha1_ssse3_glue.o
+  CC      kernel/bpf/hashtab.o
+  CC      kernel/debug/kdb/kdb_io.o
+  CC      security/apparmor/domain.o
+  CC [M]  fs/adfs/dir_fplus.o
+  CC      kernel/bpf/arraymap.o
+  CC      security/integrity/ima/ima_init.o
+  CC [M]  fs/adfs/file.o
+  AS [M]  arch/x86/crypto/sha1_avx2_x86_64_asm.o
+  AS [M]  arch/x86/crypto/sha1_ni_asm.o
+  AS [M]  arch/x86/crypto/crc32-pclmul_asm.o
+  CC      kernel/debug/kdb/kdb_main.o
+  CC [M]  arch/x86/crypto/crc32-pclmul_glue.o
+  CC [M]  fs/adfs/inode.o
+  CC      security/integrity/ima/ima_main.o
+  CC      kernel/bpf/percpu_freelist.o
+  AS [M]  arch/x86/crypto/sha256-ssse3-asm.o
+  CC      kernel/bpf/bpf_lru_list.o
+  CC      security/apparmor/policy.o
+  CC      security/integrity/ima/ima_crypto.o
+  AS [M]  arch/x86/crypto/sha256-avx-asm.o
+  CC [M]  fs/adfs/map.o
+  CC [M]  fs/adfs/super.o
+  AS [M]  arch/x86/crypto/sha256-avx2-asm.o
+  CC      kernel/cgroup/namespace.o
+  CC      kernel/debug/kdb/kdb_support.o
+  CC [M]  arch/x86/crypto/sha256_ssse3_glue.o
+  CC      kernel/bpf/lpm_trie.o
+  CC      security/integrity/ima/ima_api.o
+  AS [M]  arch/x86/crypto/sha256_ni_asm.o
+  CC      kernel/dma/mapping.o
+  AS [M]  arch/x86/crypto/sha512-ssse3-asm.o
+  LD [M]  fs/adfs/adfs.o
+  CC      kernel/cgroup/cgroup-v1.o
+  AS [M]  arch/x86/crypto/sha512-avx-asm.o
+  CC [M]  fs/affs/super.o
+  AS [M]  arch/x86/crypto/sha512-avx2-asm.o
+  CC      security/integrity/ima/ima_policy.o
+  CC      security/apparmor/policy_unpack.o
+  CC [M]  arch/x86/crypto/sha512_ssse3_glue.o
+  CC      kernel/debug/kdb/kdb_bt.o
+  CC      kernel/dma/direct.o
+  CC      kernel/bpf/map_in_map.o
+  GENKDB  kernel/debug/kdb/gen-kdb_cmds.c
+  CC      kernel/debug/kdb/kdb_bp.o
+  CC [M]  fs/affs/namei.o
+  CC      kernel/debug/kdb/kdb_debugger.o
+  AS [M]  arch/x86/crypto/crct10dif-pcl-asm_64.o
+  CC      kernel/bpf/local_storage.o
+  CC      kernel/dma/dummy.o
+  CC [M]  arch/x86/crypto/crct10dif-pclmul_glue.o
+  CC      kernel/debug/kdb/kdb_keyboard.o
+  CC      kernel/cgroup/freezer.o
+  CC      security/integrity/ima/ima_template.o
+  CC [M]  fs/affs/inode.o
+  AS [M]  arch/x86/crypto/poly1305-sse2-x86_64.o
+  CC [M]  arch/x86/crypto/poly1305_glue.o
+  CC      security/apparmor/procattr.o
+  CC      kernel/dma/virt.o
+  CC      kernel/debug/kdb/gen-kdb_cmds.o
+  AR      kernel/debug/kdb/built-in.a
+  CC      kernel/debug/debug_core.o
+  CC      security/integrity/ima/ima_template_lib.o
+  CC      kernel/cgroup/legacy_freezer.o
+  AS [M]  arch/x86/crypto/poly1305-avx2-x86_64.o
+  CC [M]  fs/affs/file.o
+  AS [M]  arch/x86/crypto/aegis128-aesni-asm.o
+  CC      kernel/bpf/queue_stack_maps.o
+  CC [M]  arch/x86/crypto/aegis128-aesni-glue.o
+  CC      kernel/dma/swiotlb.o
+  CC      security/apparmor/lsm.o
+  CC      kernel/cgroup/pids.o
+  CC      kernel/debug/gdbstub.o
+  CC      security/integrity/ima/ima_appraise.o
+  CC      kernel/bpf/disasm.o
+  AS [M]  arch/x86/crypto/nh-sse2-x86_64.o
+  CC [M]  arch/x86/crypto/nhpoly1305-sse2-glue.o
+  CC [M]  fs/affs/dir.o
+  CC      kernel/cgroup/rdma.o
+  CC      kernel/bpf/btf.o
+  AR      kernel/dma/built-in.a
+  AR      kernel/debug/built-in.a
+  AS [M]  arch/x86/crypto/nh-avx2-x86_64.o
+  CC      kernel/cgroup/cpuset.o
+  CC [M]  fs/afs/cache.o
+  CC [M]  arch/x86/crypto/nhpoly1305-avx2-glue.o
+  AR      security/integrity/ima/built-in.a
+  CC [M]  fs/affs/amigaffs.o
+  CC      security/integrity/iint.o
+  CC [M]  fs/affs/bitmap.o
+  GEN     security/apparmor/rlim_names.h
+  CC      security/apparmor/secid.o
+  AS [M]  arch/x86/crypto/camellia-aesni-avx-asm_64.o
+  CC [M]  arch/x86/crypto/camellia_aesni_avx_glue.o
+  CC [M]  fs/afs/addr_list.o
+  CC      security/integrity/integrity_audit.o
+  AS [M]  arch/x86/crypto/cast5-avx-x86_64-asm_64.o
+  CC [M]  fs/affs/symlink.o
+  CC      security/keys/encrypted-keys/encrypted.o
+  CC      kernel/bpf/devmap.o
+  CC      security/integrity/digsig.o
+  LD [M]  fs/affs/affs.o
+  CC [M]  arch/x86/crypto/cast5_avx_glue.o
+  AS [M]  arch/x86/crypto/cast6-avx-x86_64-asm_64.o
+  AR      kernel/cgroup/built-in.a
+  CC      security/apparmor/file.o
+  CC      security/keys/encrypted-keys/ecryptfs_format.o
+  CC      security/keys/encrypted-keys/masterkey_trusted.o
+  CC [M]  fs/afs/callback.o
+  CC [M]  arch/x86/crypto/cast6_avx_glue.o
+  AS [M]  arch/x86/crypto/twofish-avx-x86_64-asm_64.o
+  CC      security/integrity/digsig_asymmetric.o
+  AR      security/keys/encrypted-keys/built-in.a
+  CC      security/integrity/platform_certs/platform_keyring.o
+  CC      security/keys/gc.o
+  CC      security/keys/key.o
+  CC      kernel/bpf/cpumap.o
+  CC [M]  arch/x86/crypto/twofish_avx_glue.o
+  AS [M]  arch/x86/crypto/serpent-avx-x86_64-asm_64.o
+  CC      kernel/bpf/xskmap.o
+  CC      security/integrity/platform_certs/efi_parser.o
+  CC      security/apparmor/policy_ns.o
+  AS [M]  arch/x86/crypto/camellia-aesni-avx2-asm_64.o
+  CC [M]  arch/x86/crypto/serpent_avx_glue.o
+  CC      security/apparmor/label.o
+  CC [M]  fs/afs/cell.o
+  CC      security/keys/keyring.o
+  CC      security/integrity/platform_certs/load_uefi.o
+  CC      arch/x86/events/amd/core.o
+  CC      kernel/bpf/offload.o
+  CC [M]  arch/x86/crypto/camellia_aesni_avx2_glue.o
+  AS [M]  arch/x86/crypto/serpent-avx2-asm_64.o
+  AR      security/integrity/built-in.a
+  CC      arch/x86/events/amd/uncore.o
+  CC [M]  fs/afs/cmservice.o
+  CC      arch/x86/events/amd/ibs.o
+  CC [M]  arch/x86/crypto/serpent_avx2_glue.o
+  CC      security/keys/keyctl.o
+  LD [M]  arch/x86/crypto/des3_ede-x86_64.o
+  CC [M]  fs/autofs/init.o
+  CC      arch/x86/events/amd/iommu.o
+  CC      kernel/bpf/stackmap.o
+  LD [M]  arch/x86/crypto/camellia-x86_64.o
+  CC [M]  fs/autofs/inode.o
+  LD [M]  arch/x86/crypto/blowfish-x86_64.o
+  LD [M]  arch/x86/crypto/twofish-x86_64.o
+  LD [M]  arch/x86/crypto/twofish-x86_64-3way.o
+  LD [M]  arch/x86/crypto/chacha-x86_64.o
+  LD [M]  arch/x86/crypto/serpent-sse2-x86_64.o
+  CC      security/apparmor/mount.o
+  LD [M]  arch/x86/crypto/aesni-intel.o
+  LD [M]  arch/x86/crypto/ghash-clmulni-intel.o
+  LD [M]  arch/x86/crypto/sha1-ssse3.o
+  LD [M]  arch/x86/crypto/crc32-pclmul.o
+  LD [M]  arch/x86/crypto/sha256-ssse3.o
+  CC [M]  fs/afs/dir.o
+  LD [M]  arch/x86/crypto/sha512-ssse3.o
+  LD [M]  arch/x86/crypto/crct10dif-pclmul.o
+  CC [M]  fs/afs/dir_edit.o
+  LD [M]  arch/x86/crypto/poly1305-x86_64.o
+  LD [M]  arch/x86/crypto/aegis128-aesni.o
+  LD [M]  arch/x86/crypto/nhpoly1305-sse2.o
+  LD [M]  arch/x86/crypto/nhpoly1305-avx2.o
+  LD [M]  arch/x86/crypto/camellia-aesni-avx-x86_64.o
+  LD [M]  arch/x86/crypto/cast5-avx-x86_64.o
+  LD [M]  arch/x86/crypto/cast6-avx-x86_64.o
+  AR      arch/x86/events/amd/built-in.a
+  LD [M]  arch/x86/crypto/twofish-avx-x86_64.o
+  LD [M]  arch/x86/crypto/serpent-avx-x86_64.o
+  CC      security/keys/permission.o
+  LD [M]  arch/x86/crypto/camellia-aesni-avx2.o
+  LD [M]  arch/x86/crypto/serpent-avx2.o
+  CC      arch/x86/events/intel/core.o
+  AR      arch/x86/crypto/built-in.a
+  CC      kernel/bpf/cgroup.o
+  CC [M]  fs/autofs/root.o
+  CC      security/safesetid/lsm.o
+  GEN     security/apparmor/net_names.h
+  CC      security/keys/process_keys.o
+  GEN     security/apparmor/net_names.h
+  CC      security/apparmor/crypto.o
+  CC      security/safesetid/securityfs.o
+  CC [M]  fs/afs/dir_silly.o
+  CC      kernel/bpf/reuseport_array.o
+  CC [M]  fs/autofs/symlink.o
+  AR      security/safesetid/built-in.a
+  CC      arch/x86/events/intel/bts.o
+  CC      security/keys/request_key.o
+  CC      kernel/events/core.o
+  CC [M]  fs/autofs/waitq.o
+  CC [M]  fs/befs/datastream.o
+  CC      security/apparmor/capability.o
+scripts/Makefile.build:265: recipe for target 'fs/afs/dir_silly.o' failed
+scripts/Makefile.build:509: recipe for target 'fs/afs' failed
+  CC      security/apparmor/resource.o
+  CC [M]  fs/befs/btree.o
+  AR      kernel/bpf/built-in.a
+  CC      security/apparmor/net.o
+  CC      arch/x86/events/intel/ds.o
+  CC [M]  fs/autofs/expire.o
+  CC      security/keys/request_key_auth.o
+  CC      arch/x86/events/intel/knc.o
+  CC [M]  fs/befs/super.o
+  CC      arch/x86/events/core.o
+  CC [M]  fs/autofs/dev-ioctl.o
+  CC      security/keys/user_defined.o
+  AR      security/apparmor/built-in.a
+  CC [M]  fs/befs/inode.o
+  CC      arch/x86/events/intel/lbr.o
+  GEN     security/selinux/flask.h security/selinux/av_permissions.h
+  CC      security/selinux/avc.o
+  CC      arch/x86/events/intel/p4.o
+  CC      security/keys/compat.o
+  LD [M]  fs/autofs/autofs4.o
+  CC [M]  fs/befs/debug.o
+  CC      arch/x86/events/intel/p6.o
+  CC      security/keys/compat_dh.o
+  CC [M]  fs/befs/io.o
+  CC      security/keys/proc.o
+  CC      security/keys/sysctl.o
+  CC [M]  fs/befs/linuxvfs.o
+  CC      arch/x86/events/intel/pt.o
+  CC      arch/x86/hyperv/hv_init.o
+  CC      security/selinux/hooks.o
+  CC      kernel/events/ring_buffer.o
+  CC      arch/x86/events/intel/uncore.o
+  CC      security/keys/persistent.o
+  CC      arch/x86/events/intel/uncore_nhmex.o
+  LD [M]  fs/befs/befs.o
+Makefile:1652: recipe for target 'fs' failed
+  CC      security/smack/smack_lsm.o
+  CC      arch/x86/hyperv/mmu.o
+  CC      security/keys/dh.o
+  CC      kernel/events/callchain.o
+  CC      security/tomoyo/audit.o
+  POLICY  security/tomoyo/builtin-policy.h
+  CC      arch/x86/events/intel/uncore_snb.o
+  CC      arch/x86/hyperv/nested.o
+  CC      security/keys/keyctl_pkey.o
+  CC      kernel/events/hw_breakpoint.o
+  CC      arch/x86/events/intel/uncore_snbep.o
+  CC [M]  arch/x86/events/intel/rapl.o
+  CC      arch/x86/hyperv/hv_apic.o
+  CC      security/keys/big_key.o
+  CC      security/tomoyo/condition.o
+  CC      security/smack/smack_access.o
+  CC      kernel/events/uprobes.o
+  CC [M]  arch/x86/events/intel/cstate.o
+  CC      security/selinux/selinuxfs.o
+  CC      security/keys/trusted.o
+  CC      arch/x86/hyperv/hv_spinlock.o
+  AR      arch/x86/hyperv/built-in.a
+  LD [M]  arch/x86/events/intel/intel-rapl-perf.o
+  CC      security/tomoyo/domain.o
+  CC      security/tomoyo/environ.o
+  CC      security/tomoyo/file.o
+  AR      arch/x86/events/intel/built-in.a
+  LD [M]  arch/x86/events/intel/intel-cstate.o
+  CC      arch/x86/events/probe.o
+  AR      security/keys/built-in.a
+  CC      security/smack/smackfs.o
+  AR      kernel/events/built-in.a
+  CC      security/smack/smack_netfilter.o
+  CC      kernel/irq/irqdesc.o
+  CC      arch/x86/events/msr.o
+  CC      security/selinux/netlink.o
+  CC      security/tomoyo/gc.o
+  CC      kernel/irq/handle.o
+  CC      kernel/livepatch/core.o
+  CC      security/yama/yama_lsm.o
+  CC      security/selinux/nlmsgtab.o
+  CC      kernel/irq/manage.o
+  AR      arch/x86/events/built-in.a
+  CC      arch/x86/ia32/sys_ia32.o
+  CC      kernel/livepatch/patch.o
+  AR      security/smack/built-in.a
+  CC      kernel/livepatch/shadow.o
+  CC      kernel/livepatch/transition.o
+  CC      security/tomoyo/group.o
+  AR      security/yama/built-in.a
+  CC      security/commoncap.o
+  CC      security/selinux/netif.o
+  CC      security/selinux/netnode.o
+  CC      security/selinux/netport.o
+  CC      arch/x86/ia32/ia32_signal.o
+  CC      security/min_addr.o
+  AR      kernel/livepatch/built-in.a
+  CC      kernel/irq/spurious.o
+  CC      arch/x86/ia32/audit.o
+  CC      kernel/irq/resend.o
+  CC      security/selinux/ibpkey.o
+  CC      security/tomoyo/load_policy.o
+  CC      security/security.o
+  CC      kernel/irq/chip.o
+  AR      arch/x86/ia32/built-in.a
+  CC [M]  arch/x86/kvm/../../../virt/kvm/coalesced_mmio.o
+  CC [M]  arch/x86/kvm/../../../virt/kvm/kvm_main.o
+  CC      arch/x86/kernel/acpi/boot.o
+  CC [M]  arch/x86/kvm/../../../virt/kvm/eventfd.o
+  CC      security/selinux/ss/ebitmap.o
+  CC      security/tomoyo/memory.o
+  CC      kernel/irq/dummychip.o
+  CC      kernel/irq/devres.o
+  CC      arch/x86/kernel/apic/apic.o
+  CC      arch/x86/kernel/acpi/sleep.o
+  CC      security/selinux/ss/hashtab.o
+  CC      security/tomoyo/mount.o
+  CC      arch/x86/kernel/apic/apic_common.o
+  CC      kernel/irq/generic-chip.o
+  AS      arch/x86/kernel/acpi/wakeup_64.o
+  CC      arch/x86/kernel/acpi/apei.o
+  CC      security/selinux/ss/symtab.o
+  CC      security/selinux/ss/sidtab.o
+  CC      arch/x86/kernel/acpi/cppc_msr.o
+  CC      arch/x86/kernel/apic/apic_noop.o
+  CC      kernel/irq/autoprobe.o
+  CC      kernel/irq/irqdomain.o
+  CC      security/tomoyo/network.o
+  CC [M]  arch/x86/kvm/../../../virt/kvm/irqchip.o
+  CC      arch/x86/kernel/acpi/cstate.o
+  CC      arch/x86/kernel/apic/ipi.o
+  CC      security/selinux/ss/avtab.o
+  CC      arch/x86/kernel/apic/vector.o
+  CC      kernel/irq/proc.o
+  CC      kernel/locking/semaphore.o
+  CC [M]  arch/x86/kvm/../../../virt/kvm/vfio.o
+  AR      arch/x86/kernel/acpi/built-in.a
+  CC      kernel/locking/rwsem.o
+  CC      security/tomoyo/realpath.o
+  CC      arch/x86/mm/init.o
+scripts/Makefile.build:265: recipe for target 'kernel/locking/rwsem.o' failed
+  CC      arch/x86/mm/init_64.o
+scripts/Makefile.build:509: recipe for target 'kernel/locking' failed
+  CC      arch/x86/mm/fault.o
+  CC      security/selinux/ss/policydb.o
+  CC      kernel/irq/migration.o
+  CC [M]  arch/x86/kvm/../../../virt/kvm/async_pf.o
+  CC      arch/x86/kernel/apic/hw_nmi.o
+  CC      security/tomoyo/securityfs_if.o
+  CC      kernel/irq/cpuhotplug.o
+  CC      arch/x86/kernel/apic/io_apic.o
+  CC [M]  arch/x86/kvm/x86.o
+  CC [M]  arch/x86/kvm/mmu.o
+  CC      kernel/irq/pm.o
+  CC      arch/x86/mm/ioremap.o
+  CC      arch/x86/net/bpf_jit_comp.o
+  CC      security/tomoyo/tomoyo.o
+  CC      kernel/irq/msi.o
+  CC      arch/x86/mm/extable.o
+  CC      security/selinux/ss/services.o
+  CC      kernel/irq/affinity.o
+  CC      arch/x86/kernel/apic/msi.o
+  CC      security/tomoyo/util.o
+  AR      arch/x86/net/built-in.a
+  CC      arch/x86/kernel/apic/apic_numachip.o
+  CC      kernel/irq/matrix.o
+  CC      arch/x86/mm/pageattr.o
+  CC [M]  arch/x86/kvm/emulate.o
+  CC      arch/x86/kernel/apic/x2apic_phys.o
+  CC      security/tomoyo/common.o
+  AR      kernel/irq/built-in.a
+Makefile:1652: recipe for target 'kernel' failed
+  CC      arch/x86/kernel/apic/x2apic_cluster.o
+  CC      arch/x86/kernel/apic/apic_flat_64.o
+  CC      security/selinux/ss/conditional.o
+  CC      arch/x86/mm/mmap.o
+  CC      arch/x86/kernel/cpu/mce/core.o
+  CC      arch/x86/kernel/apic/probe_64.o
+  AR      arch/x86/kernel/apic/built-in.a
+  CC      arch/x86/mm/pat.o
+  CC      security/inode.o
+  CC      security/selinux/ss/mls.o
+  AR      security/tomoyo/built-in.a
+  CC      security/lsm_audit.o
+  CC      security/selinux/ss/status.o
+  CC      security/selinux/xfrm.o
+  CC      arch/x86/mm/pgtable.o
+  CC      arch/x86/mm/physaddr.o
+  CC      arch/x86/kernel/cpu/mce/severity.o
+  CC      security/selinux/netlabel.o
+  CC      security/device_cgroup.o
+  CC      arch/x86/kernel/cpu/microcode/core.o
+  CC      arch/x86/kernel/cpu/mce/genpool.o
+  CC      arch/x86/kernel/cpu/mce/intel.o
+  CC      arch/x86/mm/setup_nx.o
+  CC      arch/x86/kernel/cpu/microcode/intel.o
+  CC      arch/x86/kernel/cpu/mce/amd.o
+  CC      arch/x86/mm/tlb.o
+  CC      arch/x86/kernel/cpu/mce/threshold.o
+  CC      arch/x86/kernel/cpu/microcode/amd.o
+  CC [M]  arch/x86/kvm/i8259.o
+  CC [M]  arch/x86/kvm/irq.o
+  AR      security/selinux/built-in.a
+  AR      arch/x86/platform/atom/built-in.a
+  AR      security/built-in.a
+  CC [M]  arch/x86/platform/atom/punit_atom_debug.o
+scripts/Makefile.build:265: recipe for target 'arch/x86/mm/tlb.o' failed
+scripts/Makefile.build:509: recipe for target 'arch/x86/mm' failed
+  CC      arch/x86/kernel/fpu/init.o
+  CC      arch/x86/kernel/kprobes/core.o
+  CC      arch/x86/kernel/kprobes/opt.o
+  AR      arch/x86/platform/ce4100/built-in.a
+  AR      arch/x86/kernel/cpu/microcode/built-in.a
+  CC      arch/x86/platform/efi/quirks.o
+  CC      arch/x86/kernel/process_64.o
+  CC [M]  arch/x86/kvm/lapic.o
+  CC      arch/x86/kernel/fpu/bugs.o
+  CC      arch/x86/kernel/fpu/core.o
+  CC      arch/x86/kernel/cpu/mce/therm_throt.o
+  CC      arch/x86/kernel/fpu/regset.o
+  CC      arch/x86/kernel/kprobes/ftrace.o
+  CC      arch/x86/kernel/signal.o
+  CC      arch/x86/platform/efi/efi.o
+  AR      arch/x86/kernel/kprobes/built-in.a
+  CC      arch/x86/kernel/fpu/signal.o
+  CC      arch/x86/kernel/signal_compat.o
+  CC      arch/x86/kernel/cpu/mce/apei.o
+  CC      arch/x86/kernel/cpu/mtrr/mtrr.o
+  CC      arch/x86/kernel/cpu/mtrr/if.o
+  CC      arch/x86/platform/efi/efi_64.o
+  AR      arch/x86/platform/geode/built-in.a
+  CC [M]  arch/x86/kvm/i8254.o
+  AR      arch/x86/platform/goldfish/built-in.a
+  CC      arch/x86/kernel/traps.o
+  CC      arch/x86/kernel/fpu/xstate.o
+  CC      arch/x86/platform/intel/iosf_mbi.o
+  CC      arch/x86/kernel/cpu/mce/dev-mcelog.o
+  CC      arch/x86/kernel/cpu/mtrr/generic.o
+  CC      arch/x86/kernel/cpu/mtrr/cleanup.o
+  CC [M]  arch/x86/kernel/cpu/mce/inject.o
+  CC      arch/x86/kernel/idt.o
+  CC [M]  arch/x86/kvm/ioapic.o
+  AR      arch/x86/platform/intel/built-in.a
+  CC [M]  arch/x86/kvm/irq_comm.o
+  AR      arch/x86/kernel/cpu/mce/built-in.a
+  CC [M]  arch/x86/kvm/cpuid.o
+  AS      arch/x86/platform/efi/efi_stub_64.o
+  AR      arch/x86/kernel/fpu/built-in.a
+  AS      arch/x86/platform/efi/efi_thunk_64.o
+  AR      arch/x86/kernel/cpu/mtrr/built-in.a
+  CC      arch/x86/kernel/cpu/resctrl/core.o
+  AR      arch/x86/platform/efi/built-in.a
+  CC      arch/x86/kernel/cpu/resctrl/rdtgroup.o
+  AR      arch/x86/platform/intel-mid/built-in.a
+  AR      arch/x86/platform/intel-quark/built-in.a
+  AR      arch/x86/platform/iris/built-in.a
+  AR      arch/x86/platform/olpc/built-in.a
+  AR      arch/x86/platform/scx200/built-in.a
+  CC      arch/x86/platform/sfi/sfi.o
+  CC      arch/x86/kernel/cpu/resctrl/monitor.o
+  LD [M]  arch/x86/kernel/cpu/mce/mce-inject.o
+  CC      arch/x86/kernel/irq.o
+  CC      arch/x86/kernel/irq_64.o
+  CC      arch/x86/kernel/cpu/resctrl/ctrlmondata.o
+  CC [M]  arch/x86/kvm/pmu.o
+  AR      arch/x86/platform/sfi/built-in.a
+  AR      arch/x86/platform/ts5500/built-in.a
+  AR      arch/x86/platform/uv/built-in.a
+  CC      arch/x86/kernel/cpu/cacheinfo.o
+  AR      arch/x86/platform/built-in.a
+  CC      arch/x86/kernel/cpu/scattered.o
+  CC [M]  arch/x86/kvm/mtrr.o
+  CC      arch/x86/kernel/cpu/topology.o
+  CC      arch/x86/kernel/cpu/common.o
+  CC      arch/x86/kernel/cpu/resctrl/pseudo_lock.o
+  CC [M]  arch/x86/kvm/hyperv.o
+  CC      arch/x86/kernel/dumpstack_64.o
+  CC [M]  arch/x86/kvm/page_track.o
+  CC [M]  arch/x86/kvm/debugfs.o
+  CC [M]  arch/x86/kvm/vmx/vmx.o
+  CC      arch/x86/kernel/cpu/rdrand.o
+  AS [M]  arch/x86/kvm/vmx/vmenter.o
+  CC      arch/x86/kernel/cpu/bugs.o
+  CC      arch/x86/kernel/cpu/match.o
+  CC      arch/x86/kernel/cpu/aperfmperf.o
+  CC [M]  arch/x86/kvm/vmx/pmu_intel.o
+  AR      arch/x86/kernel/cpu/resctrl/built-in.a
+  CC [M]  arch/x86/kvm/vmx/vmcs12.o
+  CC [M]  arch/x86/kvm/vmx/evmcs.o
+  CC [M]  arch/x86/kvm/vmx/nested.o
+  CC [M]  arch/x86/kvm/svm.o
+  CC      arch/x86/kernel/cpu/cpuid-deps.o
+  CC      arch/x86/kernel/cpu/umwait.o
+  CC [M]  arch/x86/kvm/pmu_amd.o
+  CC      arch/x86/kernel/time.o
+  LD [M]  arch/x86/kvm/kvm.o
+  CC      arch/x86/kernel/cpu/proc.o
+  MKCAP   arch/x86/kernel/cpu/capflags.c
+  CC      arch/x86/kernel/ioport.o
+  CC      arch/x86/kernel/cpu/powerflags.o
+  CC      arch/x86/kernel/cpu/intel.o
+  CC      arch/x86/kernel/cpu/intel_pconfig.o
+  CC      arch/x86/kernel/cpu/tsx.o
+  CC      arch/x86/kernel/dumpstack.o
+  CC      arch/x86/kernel/cpu/intel_epb.o
+  CC      arch/x86/kernel/nmi.o
+  LD [M]  arch/x86/kvm/kvm-amd.o
+  CC      arch/x86/kernel/cpu/amd.o
+  CC      arch/x86/kernel/ldt.o
+  CC      arch/x86/kernel/cpu/hygon.o
+  CC      arch/x86/kernel/setup.o
+  CC      arch/x86/kernel/x86_init.o
+  CC      arch/x86/kernel/i8259.o
+  LD [M]  arch/x86/kvm/kvm-intel.o
+  CC      arch/x86/kernel/irqinit.o
+  CC      arch/x86/kernel/jump_label.o
+  CC      arch/x86/kernel/irq_work.o
+  CC      arch/x86/kernel/probe_roms.o
+  CC      arch/x86/kernel/sys_x86_64.o
+  CC      arch/x86/kernel/espfix_64.o
+  CC      arch/x86/kernel/ksysfs.o
+  CC      arch/x86/kernel/cpu/centaur.o
+  CC      arch/x86/kernel/bootflag.o
+  CC      arch/x86/kernel/e820.o
+  CC      arch/x86/kernel/pci-dma.o
+  CC      arch/x86/kernel/quirks.o
+  CC      arch/x86/kernel/cpu/zhaoxin.o
+  CC      arch/x86/kernel/topology.o
+  CC      arch/x86/kernel/kdebugfs.o
+  CC      arch/x86/kernel/cpu/perfctr-watchdog.o
+  CC      arch/x86/kernel/alternative.o
+  CC      arch/x86/kernel/i8253.o
+  CC      arch/x86/kernel/hw_breakpoint.o
+  CC      arch/x86/kernel/cpu/vmware.o
+  CC      arch/x86/kernel/tsc.o
+  CC      arch/x86/kernel/tsc_msr.o
+  CC      arch/x86/kernel/cpu/hypervisor.o
+  CC      arch/x86/kernel/io_delay.o
+  CC      arch/x86/kernel/cpu/mshyperv.o
+  CC      arch/x86/kernel/cpu/acrn.o
+  CC      arch/x86/kernel/rtc.o
+  CC      arch/x86/kernel/pci-iommu_table.o
+  CC      arch/x86/kernel/resource.o
+  AS      arch/x86/kernel/irqflags.o
+  CC      arch/x86/kernel/process.o
+  CC      arch/x86/kernel/ptrace.o
+scripts/Makefile.build:265: recipe for target 'arch/x86/kernel/cpu/mshyperv.o' failed
+  CC      arch/x86/kernel/step.o
+  CC      arch/x86/kernel/tboot.o
+  CC      arch/x86/kernel/tls.o
+  CC      arch/x86/kernel/i8237.o
+  CC      arch/x86/kernel/stacktrace.o
+  CC      arch/x86/kernel/reboot.o
+  CC      arch/x86/kernel/early-quirks.o
+  CC      arch/x86/kernel/smp.o
+  CC      arch/x86/kernel/smpboot.o
+  CC      arch/x86/kernel/tsc_sync.o
+  CC      arch/x86/kernel/setup_percpu.o
+  CC      arch/x86/kernel/mpparse.o
+  CC      arch/x86/kernel/ftrace.o
+  CC      arch/x86/kernel/livepatch.o
+  AS      arch/x86/kernel/ftrace_64.o
+  CC      arch/x86/kernel/trace_clock.o
+  AS      arch/x86/kernel/relocate_kernel_64.o
+  CC      arch/x86/kernel/machine_kexec_64.o
+  CC      arch/x86/kernel/crash.o
+  CC      arch/x86/kernel/kexec-bzimage64.o
+  CC      arch/x86/kernel/crash_dump_64.o
+  CC      arch/x86/kernel/module.o
+  CC      arch/x86/kernel/doublefault.o
+  CC      arch/x86/kernel/kgdb.o
+  CC      arch/x86/kernel/early_printk.o
+  CC      arch/x86/kernel/hpet.o
+  CC      arch/x86/kernel/amd_nb.o
+  CC      arch/x86/kernel/kvm.o
+  CC      arch/x86/kernel/kvmclock.o
+  CC      arch/x86/kernel/paravirt.o
+  CC      arch/x86/kernel/paravirt_patch.o
+  CC      arch/x86/kernel/paravirt-spinlocks.o
+  CC      arch/x86/kernel/pvclock.o
+  CC      arch/x86/kernel/pmem.o
+  CC      arch/x86/kernel/jailhouse.o
+  CC      arch/x86/kernel/eisa.o
+  CC      arch/x86/kernel/pcspeaker.o
+  CC      arch/x86/kernel/check.o
+  CC      arch/x86/kernel/pci-swiotlb.o
+  CC      arch/x86/kernel/uprobes.o
+  CC      arch/x86/kernel/sysfb.o
+  CC      arch/x86/kernel/sysfb_efi.o
+  CC      arch/x86/kernel/perf_regs.o
+  CC      arch/x86/kernel/tracepoint.o
+  CC      arch/x86/kernel/itmt.o
+  CC      arch/x86/kernel/umip.o
+  CC      arch/x86/kernel/unwind_frame.o
+  CC      arch/x86/kernel/audit_64.o
+  CC      arch/x86/kernel/amd_gart_64.o
+  CC      arch/x86/kernel/aperture_64.o
+  CC      arch/x86/kernel/pci-calgary_64.o
+  CC      arch/x86/kernel/tce_64.o
+  CC      arch/x86/kernel/mmconf-fam10h_64.o
+  CC      arch/x86/kernel/vsmp_64.o
+  CC      arch/x86/kernel/ima_arch.o
+  AS      arch/x86/kernel/head_64.o
+  CC      arch/x86/kernel/head64.o
+  CC      arch/x86/kernel/ebda.o
+  LDS     arch/x86/kernel/vmlinux.lds
+  CC      arch/x86/kernel/platform-quirks.o
+  CC [M]  arch/x86/kernel/msr.o
+  CC [M]  arch/x86/kernel/cpuid.o
+scripts/Makefile.build:509: recipe for target 'arch/x86/kernel/cpu' failed
+scripts/Makefile.build:509: recipe for target 'arch/x86/kernel' failed
+Makefile:1652: recipe for target 'arch/x86' failed
+debian/rules:6: recipe for target 'build' failed
+scripts/Makefile.package:73: recipe for target 'deb-pkg' failed
+Makefile:1430: recipe for target 'deb-pkg' failed

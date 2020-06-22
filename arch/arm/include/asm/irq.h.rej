@@ -1,0 +1,11 @@
+--- arch/arm/include/asm/irq.h
++++ arch/arm/include/asm/irq.h
+@@ -23,6 +23,8 @@
+ #endif
+ 
+ #ifndef __ASSEMBLY__
++#include <linux/cpumask.h>
++
+ struct irqaction;
+ struct pt_regs;
+ 

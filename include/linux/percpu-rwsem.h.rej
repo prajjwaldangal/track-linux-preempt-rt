@@ -1,0 +1,36 @@
+--- include/linux/percpu-rwsem.h
++++ include/linux/percpu-rwsem.h
+@@ -135,29 +160,19 @@ extern void percpu_free_rwsem(struct percpu_rw_semaphore *);
+ 	__percpu_init_rwsem(sem, #sem, &rwsem_key);		\
+ })
+ 
+-#define percpu_rwsem_is_held(sem) lockdep_is_held(&(sem)->rw_sem)
+-
+-#define percpu_rwsem_assert_held(sem)				\
+-	lockdep_assert_held(&(sem)->rw_sem)
++#define percpu_rwsem_is_held(sem) lockdep_is_held(sem)
++#define percpu_rwsem_assert_held(sem)  lockdep_assert_held(sem)
+ 
+ static inline void percpu_rwsem_release(struct percpu_rw_semaphore *sem,
+ 					bool read, unsigned long ip)
+ {
+-	lock_release(&sem->rw_sem.dep_map, 1, ip);
+-#ifdef CONFIG_RWSEM_SPIN_ON_OWNER
+-	if (!read)
+-		atomic_long_set(&sem->rw_sem.owner, RWSEM_OWNER_UNKNOWN);
+-#endif
++	lock_release(&sem->dep_map, 1, ip);
+ }
+ 
+ static inline void percpu_rwsem_acquire(struct percpu_rw_semaphore *sem,
+ 					bool read, unsigned long ip)
+ {
+-	lock_acquire(&sem->rw_sem.dep_map, 0, 1, read, 1, NULL, ip);
+-#ifdef CONFIG_RWSEM_SPIN_ON_OWNER
+-	if (!read)
+-		atomic_long_set(&sem->rw_sem.owner, (long)current);
+-#endif
++	lock_acquire(&sem->dep_map, 0, 1, read, 1, NULL, ip);
+ }
+ 
+ #endif

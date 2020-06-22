@@ -1,0 +1,131 @@
+--- kernel/locking/percpu-rwsem.c
++++ kernel/locking/percpu-rwsem.c
+@@ -11,7 +11,7 @@
+ #include "rwsem.h"
+ 
+ int __percpu_init_rwsem(struct percpu_rw_semaphore *sem,
+-			const char *name, struct lock_class_key *rwsem_key)
++			const char *name, struct lock_class_key *key)
+ {
+ 	sem->read_count = alloc_percpu(int);
+ 	if (unlikely(!sem->read_count))
+@@ -19,9 +19,13 @@ int __percpu_init_rwsem(struct percpu_rw
+ 
+ 	/* ->rw_sem represents the whole percpu_rw_semaphore for lockdep */
+ 	rcu_sync_init(&sem->rss);
+-	__init_rwsem(&sem->rw_sem, name, rwsem_key);
++	init_rwsem(&sem->rw_sem);
+ 	rcuwait_init(&sem->writer);
+ 	sem->readers_block = 0;
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++	debug_check_no_locks_freed((void *)sem, sizeof(*sem));
++	lockdep_init_map(&sem->dep_map, name, key, 0);
++#endif
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(__percpu_init_rwsem);
+@@ -142,10 +146,12 @@ static bool readers_active_check(struct
+ 
+ void percpu_down_write(struct percpu_rw_semaphore *sem)
+ {
++	rwsem_acquire(&sem->dep_map, 0, 0, _RET_IP_);
++
+ 	/* Notify readers to take the slow path. */
+ 	rcu_sync_enter(&sem->rss);
+ 
+-	down_write(&sem->rw_sem);
++	__down_write(&sem->rw_sem);
+ 
+ 	/*
+ 	 * Notify new readers to block; up until now, and thus throughout the
+@@ -168,6 +174,8 @@ EXPORT_SYMBOL_GPL(percpu_down_write);
+ 
+ void percpu_up_write(struct percpu_rw_semaphore *sem)
+ {
++	rwsem_release(&sem->dep_map, 1, _RET_IP_);
++
+ 	/*
+ 	 * Signal the writer is done, no fast path yet.
+ 	 *
+@@ -183,7 +191,7 @@ void percpu_up_write(struct percpu_rw_se
+ 	/*
+ 	 * Release the write lock, this will allow readers back in the game.
+ 	 */
+-	up_write(&sem->rw_sem);
++	__up_write(&sem->rw_sem);
+ 
+ 	/*
+ 	 * Once this completes (at least one RCU-sched grace period hence) the
+--- kernel/locking/percpu-rwsem.c
++++ kernel/locking/percpu-rwsem.c
+@@ -45,7 +45,7 @@ void percpu_free_rwsem(struct percpu_rw_
+ }
+ EXPORT_SYMBOL_GPL(percpu_free_rwsem);
+ 
+-int __percpu_down_read(struct percpu_rw_semaphore *sem, int try)
++bool __percpu_down_read(struct percpu_rw_semaphore *sem, bool try)
+ {
+ 	/*
+ 	 * Due to having preemption disabled the decrement happens on
+@@ -69,7 +69,7 @@ int __percpu_down_read(struct percpu_rw_
+ 	 * release in percpu_up_write().
+ 	 */
+ 	if (likely(!smp_load_acquire(&sem->readers_block)))
+-		return 1;
++		return true;
+ 
+ 	/*
+ 	 * Per the above comment; we still have preemption disabled and
+@@ -78,7 +78,7 @@ int __percpu_down_read(struct percpu_rw_
+ 	__percpu_up_read(sem);
+ 
+ 	if (try)
+-		return 0;
++		return false;
+ 
+ 	/*
+ 	 * We either call schedule() in the wait, or we'll fall through
+@@ -94,7 +94,7 @@ int __percpu_down_read(struct percpu_rw_
+ 	__up_read(&sem->rw_sem);
+ 
+ 	preempt_disable();
+-	return 1;
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(__percpu_down_read);
+ 
+--- kernel/locking/percpu-rwsem.c
++++ kernel/locking/percpu-rwsem.c
+@@ -45,7 +45,7 @@ void percpu_free_rwsem(struct percpu_rw_
+ }
+ EXPORT_SYMBOL_GPL(percpu_free_rwsem);
+ 
+-bool __percpu_down_read(struct percpu_rw_semaphore *sem, bool try)
++static bool __percpu_down_read_trylock(struct percpu_rw_semaphore *sem)
+ {
+ 	__this_cpu_inc(*sem->read_count);
+ 
+@@ -73,11 +73,18 @@ bool __percpu_down_read(struct percpu_rw
+ 	if (likely(!smp_load_acquire(&sem->readers_block)))
+ 		return true;
+ 
+-	/*
+-	 * Per the above comment; we still have preemption disabled and
+-	 * will thus decrement on the same CPU as we incremented.
+-	 */
+-	__percpu_up_read(sem);
++	__this_cpu_dec(*sem->read_count);
++
++	/* Prod writer to re-evaluate readers_active_check() */
++	rcuwait_wake_up(&sem->writer);
++
++	return false;
++}
++
++bool __percpu_down_read(struct percpu_rw_semaphore *sem, bool try)
++{
++	if (__percpu_down_read_trylock(sem))
++		return true;
+ 
+ 	if (try)
+ 		return false;

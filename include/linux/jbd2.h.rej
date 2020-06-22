@@ -1,0 +1,25 @@
+--- include/linux/jbd2.h
++++ include/linux/jbd2.h
+@@ -347,11 +347,6 @@ static inline void jbd_lock_bh_state(str
+ 	bit_spin_lock(BH_State, &bh->b_state);
+ }
+ 
+-static inline int jbd_trylock_bh_state(struct buffer_head *bh)
+-{
+-	return bit_spin_trylock(BH_State, &bh->b_state);
+-}
+-
+ static inline int jbd_is_locked_bh_state(struct buffer_head *bh)
+ {
+ 	return bit_spin_is_locked(BH_State, &bh->b_state);
+--- include/linux/jbd2.h
++++ include/linux/jbd2.h
+@@ -1252,7 +1252,7 @@ JBD2_FEATURE_INCOMPAT_FUNCS(csum3,		CSUM
+ 
+ /* Filing buffers */
+ extern void jbd2_journal_unfile_buffer(journal_t *, struct journal_head *);
+-extern void __jbd2_journal_refile_buffer(struct journal_head *);
++extern bool __jbd2_journal_refile_buffer(struct journal_head *);
+ extern void jbd2_journal_refile_buffer(journal_t *, struct journal_head *);
+ extern void __jbd2_journal_file_buffer(struct journal_head *, transaction_t *, int);
+ extern void __journal_free_buffer(struct journal_head *bh);
