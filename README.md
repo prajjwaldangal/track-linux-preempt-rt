@@ -1,1 +1,1 @@
-# track-linux-preempt-rt
+This repo is to help track my experiments with Linux Preempt-RT (RealTime) and Open Powerlink. The kernel used is the Linux Kernel 5.4.19 which is available publicly while the patch that I am using is patch-5.4.44-rt27.patch.xz.
